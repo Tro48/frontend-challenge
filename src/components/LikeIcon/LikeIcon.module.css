@@ -1,0 +1,32 @@
+.likeButton {
+  position: absolute;
+  bottom: 20px;
+  right: 15px;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.likeIcon {
+  inline-size: 100%;
+  block-size: 100%;
+  color: transparent;
+  stroke: var(--like-icon-color);
+  stroke-width: 4;
+  transition: color var(--transition);
+}
+
+.likeButton:hover .likeIcon {
+  color: var(--like-icon-color);
+  transition: color var(--transition);
+}
+
+.likeIconActive {
+  color: var(--like-icon-active-color);
+  transition: color var(--transition);
+}

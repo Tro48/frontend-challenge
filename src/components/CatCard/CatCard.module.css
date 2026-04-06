@@ -1,0 +1,21 @@
+.catCard {
+  position: relative;
+  overflow: hidden;
+  box-shadow: none;
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.catCard:hover {
+  box-shadow: var(--shadow);
+  transform: scale(1.05);
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.catCard:hover button {
+  opacity: 1;
+  transition: opacity var(--transition);
+}
