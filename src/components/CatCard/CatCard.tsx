@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LikeIcon } from '../LikeIcon/LikeIcon';
 import styles from './CatCard.module.css';
 import { type CatCardProps } from '../../hooks/useFavorites';
+import noImg from '../../assets/noImg.png';
 
 export const CatCard = ({ src, cardId, isFavorite, onAddFavorite, onRemoveFavorite }: CatCardProps) => {
   const [error, setError] = useState(false);
@@ -22,7 +23,7 @@ export const CatCard = ({ src, cardId, isFavorite, onAddFavorite, onRemoveFavori
       {error ? (
         <img
           className={`${styles.catImage} ${styles.errorImage}`}
-          src="./src/assets/noImg.png"
+          src={noImg}
           alt="Ошибка загрузки картинки"
         />
       ) : (
