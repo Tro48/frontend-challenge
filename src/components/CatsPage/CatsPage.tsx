@@ -6,9 +6,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import type { Cat } from '../../hooks/useFavorites';
+import { useFavorites, type Cat } from '../../hooks/useFavorites';
 import { CatsList } from '../CatsList';
 import styles from './CatsPage.module.css';
+import { NoContent } from '../NoContent';
 
 const CatCard = lazy(() => import('../CatCard'));
 
@@ -19,6 +20,8 @@ export const CatsPage = () => {
   const [page, setPage] = useState(1);
   const [cats, setCats] = useState<Cat[]>([]);
   const observerTarget = useRef(null);
+
+    const {addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   const fetchCats = useCallback(async () => {
     setLoading(true);
@@ -67,7 +70,7 @@ export const CatsPage = () => {
             key={cat.id}
             fallback={<div className={styles.skeleton}></div>}
           >
-            <CatCard id={cat.id} src={cat.url} />
+            <CatCard cardId={cat.id} src={cat.url} isFavorite={isFavorite} onAddFavorite={addFavorite} onRemoveFavorite={removeFavorite} />
           </Suspense>
         ))}
       </CatsList>
@@ -77,7 +80,7 @@ export const CatsPage = () => {
       )}
 
       {!loading && cats.length === 0 && (
-        <div className={styles.noContent}>Тут пока ничего нет</div>
+        <NoContent />
       )}
 
       <div ref={observerTarget} style={{ height: '20px' }} />

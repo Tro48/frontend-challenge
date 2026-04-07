@@ -1,11 +1,29 @@
-import { useState } from 'react';
+import { type CatCardProps } from '../../hooks/useFavorites';
 import styles from './LikeIcon.module.css';
-export const LikeIcon = () => {
-  const [isLiked, setIsLiked] = useState(false);
+
+export const LikeIcon = ({
+  cardId,
+  src,
+  isFavorite,
+  onAddFavorite,
+  onRemoveFavorite,
+}: CatCardProps) => {
+  const handleLikeClick = () => {
+    if (isFavorite(cardId)) {
+      onRemoveFavorite(cardId);
+    } else {
+      onAddFavorite({
+        id: cardId,
+        url: src,
+        width: 0,
+        height: 0,
+      });
+    }
+  };
   return (
-    <button className={styles.likeButton} onClick={() => setIsLiked(!isLiked)}>
+    <button className={styles.likeButton} onClick={handleLikeClick}>
       <svg
-        className={`${styles.likeIcon} ${isLiked ? styles.likeIconActive : ''}`}
+        className={`${styles.likeIcon} ${isFavorite(cardId) ? styles.likeIconActive : ''}`}
         xmlns="http://www.w3.org/2000/svg"
         width="48"
         height="48"

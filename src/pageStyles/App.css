@@ -1,18 +1,20 @@
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-inline-size: 100vw;
-  overflow-x: hidden;
+  min-block-size: 100vh;
+  inline-size: 100%;
   font-family: var(--font-family);
 }
 
 .header {
-  inline-size: 100vw;
+  position: sticky;
+  top: 0;
+  inline-size: 100%;
   block-size: var(--header-block-size);
   padding-inline: 62px;
   background-color: var(--header-bg-color);
   box-shadow: var(--shadow);
+  z-index: 100;
 }
 
 .app-content {
@@ -21,7 +23,8 @@
   justify-items: center;
   min-block-size: calc(100vh - var(--header-block-size));
   block-size: 100%;
-  inline-size: 100vw;
+  inline-size: 100%;
+  overflow-x: hidden;
 }
 
 .skeleton {
@@ -34,5 +37,17 @@
 @keyframes shimmer {
   100% {
     background-position: -200% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-inline: 12px;
   }
 }

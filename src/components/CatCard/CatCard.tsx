@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { LikeIcon } from '../LikeIcon/LikeIcon';
 import styles from './CatCard.module.css';
+import { type CatCardProps } from '../../hooks/useFavorites';
 
-export const CatCard = ({ src, id }: { src: string; id: string }) => {
+export const CatCard = ({ src, cardId, isFavorite, onAddFavorite, onRemoveFavorite }: CatCardProps) => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +22,7 @@ export const CatCard = ({ src, id }: { src: string; id: string }) => {
       {error ? (
         <img
           className={`${styles.catImage} ${styles.errorImage}`}
-          src="./src/assets/errorIcon.png"
+          src="./src/assets/noImg.png"
           alt="Ошибка загрузки картинки"
         />
       ) : (
@@ -29,13 +30,13 @@ export const CatCard = ({ src, id }: { src: string; id: string }) => {
           <img
             className={styles.catImage}
             src={src}
-            alt={`cat ${id}`}
+            alt={`cat ${cardId}`}
             onLoad={handleImageLoad}
             onError={handleImageError}
             style={{ display: isLoading ? 'none' : 'block' }}
           />
           <div className={styles.hoverEffect}></div>
-          {!isLoading && !error && <LikeIcon />}
+          {!isLoading && !error && <LikeIcon cardId={cardId} src={src} isFavorite={isFavorite} onAddFavorite={onAddFavorite} onRemoveFavorite={onRemoveFavorite} />}
         </>
       )}
     </div>

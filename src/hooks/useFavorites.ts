@@ -7,6 +7,14 @@ export interface Cat {
   height: number;
 }
 
+export interface CatCardProps {
+  cardId: string;
+  src: string;
+  isFavorite: (cardId: string) => boolean;
+  onAddFavorite: (cat: Cat) => void;
+  onRemoveFavorite: (cardId: string) => void;
+}
+
 const STORAGE_KEY = 'favorite_cats';
 
 export function useFavorites() {

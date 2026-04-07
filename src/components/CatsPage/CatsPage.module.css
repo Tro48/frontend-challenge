@@ -10,14 +10,3 @@
   color: #000;
 }
 
-.chanks, .noContent {
-  inline-size: 100%;
-  block-size: 100%;
-  min-block-size: calc(95vh - var(--header-block-size));
-}
-
-.noContent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
