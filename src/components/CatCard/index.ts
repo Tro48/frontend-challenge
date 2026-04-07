@@ -1,1 +1,1 @@
-export { CatCard } from "./CatCard";
+export { CatCard as default } from "./CatCard";

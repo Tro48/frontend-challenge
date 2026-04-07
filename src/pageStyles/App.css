@@ -4,6 +4,7 @@
   min-height: 100vh;
   max-inline-size: 100vw;
   overflow-x: hidden;
+  font-family: var(--font-family);
 }
 
 .header {

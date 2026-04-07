@@ -1,7 +1,9 @@
 .catsList {
     display: grid;
-    padding: 50px;
+    padding: 50px 60px;
     min-block-size: calc(95vh - var(--header-block-size));
-    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    grid-template-columns: repeat(auto-fill, 224px);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
     gap: 50px;
 }

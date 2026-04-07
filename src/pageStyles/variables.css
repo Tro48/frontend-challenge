@@ -1,12 +1,13 @@
 :root {
-    --header-bg-color: #2196f3;
-    --header-block-size: 64px;
-    --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24);
-    --gradient: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 58.85%);
-    --transition: .3s;
-    --tab-color: #ffffffb3;
-    --tab-color-active: #fff;
-    --tab-bg-color-active: #1e88e5;
-    --like-icon-color: #f24e1e;
-    --like-icon-active-color: #ff3a00;;
+  --font-family: 'Roboto', sans-serif;
+  --header-bg-color: #2196f3;
+  --header-block-size: 64px;
+  --shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  --gradient: linear-gradient(180deg, transparent 0%, #fff 55%);
+  --transition: 0.3s;
+  --tab-color: #ffffffb3;
+  --tab-color-active: #fff;
+  --tab-bg-color-active: #1e88e5;
+  --like-icon-color: #f24e1e;
+  --like-icon-active-color: #ff3a00;
 }

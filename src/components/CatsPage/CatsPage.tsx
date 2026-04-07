@@ -1,25 +1,36 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import type { Cat } from '../../hooks/useFavorites';
-import { CatCard } from '../CatCard';
 import { CatsList } from '../CatsList';
 import styles from './CatsPage.module.css';
+
+const CatCard = lazy(() => import('../CatCard'));
+
+const API_KEY = import.meta.env.VITE_CATS_API_KEY;
 
 export const CatsPage = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [catsChanks, setCatsChanks] = useState<Cat[][]>([]);
+  const [cats, setCats] = useState<Cat[]>([]);
   const observerTarget = useRef(null);
+
   const fetchCats = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.thecatapi.com/v1/images/search?limit=15&page=${page}`
+        `https://api.thecatapi.com/v1/images/search?limit=15&page=${page}&api_key=${API_KEY}`
       );
       if (!response.ok) {
         console.log('noResp');
       }
       const data: Cat[] = await response.json();
-      setCatsChanks((prev) => [...prev, [...data]]);
+      setCats((prev) => [...prev, ...data]);
     } catch (error) {
       console.error('Ошибка при загрузке котиков:', error);
     } finally {
@@ -34,7 +45,7 @@ export const CatsPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !loading && catsChanks.length > 0) {
+        if (entries[0].isIntersecting && !loading && cats.length > 0) {
           setPage((prev) => prev + 1);
         }
       },
@@ -46,31 +57,26 @@ export const CatsPage = () => {
     }
 
     return () => observer.disconnect();
-  }, [loading, catsChanks.length]);
+  }, [loading, cats.length]);
 
   return (
     <>
-      {catsChanks.length > 0 && (
-        <ul className={styles.chanks}>
-          {catsChanks.map((cats, index) => (
-            <CatsList key={index}>
-              {cats.map((cat) => (
-                <CatCard key={cat.id} id={cat.id} src={cat.url} />
-              ))}
-            </CatsList>
-          ))}
-        </ul>
-      )}
+      <CatsList>
+        {cats.map((cat) => (
+          <Suspense
+            key={cat.id}
+            fallback={<div className={styles.skeleton}></div>}
+          >
+            <CatCard id={cat.id} src={cat.url} />
+          </Suspense>
+        ))}
+      </CatsList>
 
       {loading && (
-        <CatsList>
-          {[...Array(15)].map((_, i) => (
-            <CatCard key={`skeleton-${i}`} loading={true} id="" src="" />
-          ))}
-        </CatsList>
+        <p className={styles.loading}>... загружаем еще котиков ...</p>
       )}
 
-      {!loading && catsChanks.length === 0 && (
+      {!loading && cats.length === 0 && (
         <div className={styles.noContent}>Тут пока ничего нет</div>
       )}
 
