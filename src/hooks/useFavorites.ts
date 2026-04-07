@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface Cat {
   id: string;
   url: string;
+  width: number;
+  height: number;
 }
 
 const STORAGE_KEY = 'favorite_cats';

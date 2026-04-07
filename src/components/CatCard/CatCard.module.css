@@ -1,4 +1,6 @@
 .catCard {
+  inline-size: 225px;
+  block-size: 225px;
   position: relative;
   overflow: hidden;
   box-shadow: none;
@@ -18,4 +20,10 @@
 .catCard:hover button {
   opacity: 1;
   transition: opacity var(--transition);
+}
+
+.catImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Заполнит блок, обрезая лишнее */
 }
