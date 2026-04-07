@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+        env:
+          # Пробрасываем секреты из настроек GitHub в процесс сборки Vite
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_ANOTHER_VAR: ${{ secrets.ANOTHER_VAR }}
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # Vite по умолчанию собирает в папку dist
+          branch: gh-pages
