@@ -2,6 +2,7 @@ import { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { useFavorites, type Cat } from '../../hooks/useFavorites';
 import { CatsList } from '../CatsList';
 import styles from './CatsPage.module.css';
+import { Skeleton } from '../Skeleton';
 
 const CatCard = lazy(() => import('../CatCard'));
 
@@ -66,13 +67,16 @@ export const CatsPage = () => {
       {cats.length === 0 ? (
         <CatsList>
           {[...Array(imgLimit).keys()].map((i) => (
-            <div key={i} className="skeleton"></div>
+            <div key={i} style={{ position: 'relative' }}>
+              <Skeleton/>
+            </div>
           ))}
         </CatsList>
       ) : (
         <CatsList>
           {cats.map((cat) => (
             <CatCard
+              key={cat.id}
               cardId={cat.id}
               src={cat.url}
               isFavorite={isFavorite}

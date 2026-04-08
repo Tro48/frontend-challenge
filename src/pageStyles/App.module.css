@@ -17,7 +17,7 @@
   z-index: 100;
 }
 
-.app-content {
+.appContent {
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -25,19 +25,6 @@
   block-size: 100%;
   inline-size: 100%;
   overflow-x: hidden;
-}
-
-.skeleton {
-  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  z-index: 10;
-}
-
-@keyframes shimmer {
-  100% {
-    background-position: -200% 0;
-  }
 }
 
 @media (max-width: 768px) {
