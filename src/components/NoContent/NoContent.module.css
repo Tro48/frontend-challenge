@@ -12,5 +12,7 @@
 .noContentImg {
   inline-size: 20%;
   block-size: 20%;
+  max-block-size: 150px;
+  max-inline-size: 150px;
   object-fit: cover;
 }

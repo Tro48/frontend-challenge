@@ -18,7 +18,7 @@
   block-size: 100%;
   color: transparent;
   stroke: var(--like-icon-color);
-  stroke-width: 4;
+  stroke-width: 5;
   transition: color var(--transition);
 }
 

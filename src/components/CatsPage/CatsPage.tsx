@@ -1,15 +1,7 @@
-import {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { useFavorites, type Cat } from '../../hooks/useFavorites';
 import { CatsList } from '../CatsList';
 import styles from './CatsPage.module.css';
-import { NoContent } from '../NoContent';
 
 const CatCard = lazy(() => import('../CatCard'));
 
@@ -20,14 +12,16 @@ export const CatsPage = () => {
   const [page, setPage] = useState(1);
   const [cats, setCats] = useState<Cat[]>([]);
   const observerTarget = useRef(null);
+  const isFirstRender = useRef(true);
+  const imgLimit = 15;
 
-    const {addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   const fetchCats = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.thecatapi.com/v1/images/search?limit=15&page=${page}&api_key=${API_KEY}`
+        `https://api.thecatapi.com/v1/images/search?limit=${imgLimit}&page=${page}&api_key=${API_KEY}`
       );
       if (!response.ok) {
         console.log('noResp');
@@ -42,8 +36,13 @@ export const CatsPage = () => {
   }, [page]);
 
   useEffect(() => {
-    fetchCats();
-  }, [page]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      fetchCats();
+      return;
+    }
+    if (page > 1) fetchCats();
+  }, [fetchCats, page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,25 +63,29 @@ export const CatsPage = () => {
 
   return (
     <>
-      <CatsList>
-        {cats.map((cat) => (
-          <Suspense
-            key={cat.id}
-            fallback={<div className={styles.skeleton}></div>}
-          >
-            <CatCard cardId={cat.id} src={cat.url} isFavorite={isFavorite} onAddFavorite={addFavorite} onRemoveFavorite={removeFavorite} />
-          </Suspense>
-        ))}
-      </CatsList>
+      {cats.length === 0 ? (
+        <CatsList>
+          {[...Array(imgLimit).keys()].map((i) => (
+            <div key={i} className="skeleton"></div>
+          ))}
+        </CatsList>
+      ) : (
+        <CatsList>
+          {cats.map((cat) => (
+            <CatCard
+              cardId={cat.id}
+              src={cat.url}
+              isFavorite={isFavorite}
+              onAddFavorite={addFavorite}
+              onRemoveFavorite={removeFavorite}
+            />
+          ))}
+        </CatsList>
+      )}
 
       {loading && (
         <p className={styles.loading}>... загружаем еще котиков ...</p>
       )}
-
-      {!loading && cats.length === 0 && (
-        <NoContent />
-      )}
-
       <div ref={observerTarget} style={{ height: '20px' }} />
     </>
   );

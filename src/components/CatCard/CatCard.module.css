@@ -49,7 +49,31 @@
   object-fit: cover;
 }
 
+.errorImageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: #e0e0e0;
+  opacity: 0.8;
+}
+
 .errorImage {
-  inline-size: 25%;
-  block-size: 25%;
+  inline-size: 80px;
+  block-size: 80px;
+  object-fit: cover;
+}
+
+.errorText {
+  display: block;
+  text-align: center;
+  inline-size: 100%;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #000;
+  user-select: none;
 }
